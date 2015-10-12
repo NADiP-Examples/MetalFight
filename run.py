@@ -1,10 +1,12 @@
+import os
 import random
 import math
 
 from livewires import games, color
 
-
 games.init(screen_width=1200, screen_height=600, fps=60)
+IMG_DIR = os.path.join('Resources', 'Img')
+SOUND_DIR = os.path.join('Resources', 'Sounds')
 
 
 class Wrapper(games.Sprite):
@@ -39,7 +41,7 @@ class Collider2(Wrapper):
     def update(self):
         super(Collider2, self).update()
         if self.overlapping_sprites:
-            for sprite in self.overlapping_sprites:
+            for _ in self.overlapping_sprites:
                 HP1.value = HP1.value - 1
                 if HP1.value <= 0:
                     self.die()
@@ -49,7 +51,7 @@ class Collider3(Wrapper):
     def update(self):
         super(Collider3, self).update()
         if self.overlapping_sprites:
-            for sprite in self.overlapping_sprites:
+            for _ in self.overlapping_sprites:
                 HP2.value = HP2.value - 1
                 if HP2.value <= 0:
                     self.die()
@@ -60,8 +62,10 @@ class Asteroid(Wrapper):
     MEDIUM = 2
     LARGE = 3
     SPAWN = 2
-    images = {SMALL: games.load_image("modelasteroid2.gif"), MEDIUM: games.load_image("modelasteroid3.gif"),
-              LARGE: games.load_image("modelasteroid1.jpg")}
+    images = {SMALL: games.load_image(os.path.join(IMG_DIR, "modelasteroid2.gif")),
+              MEDIUM: games.load_image(os.path.join(IMG_DIR, "modelasteroid3.gif")),
+              LARGE: games.load_image(os.path.join(IMG_DIR, "modelasteroid1.jpg"))
+              }
     SPEED = 1
 
     def __init__(self, x, y, size):
@@ -81,8 +85,8 @@ class Asteroid(Wrapper):
 
 
 class Missile(Collider1):
-    image = games.load_image("missile.jpg")
-    sound = games.load_sound("missile.wav")
+    image = games.load_image(os.path.join(IMG_DIR, "missile.jpg"))
+    sound = games.load_sound(os.path.join(SOUND_DIR, "missile.wav"))
     BUFFER = 80
     VELOCITY_FACTOR = 10
     LIFEТIME = 150
@@ -121,13 +125,13 @@ class Missile(Collider1):
 
 
 class Ship(Collider2):
-    model1 = games.load_image("little.gif")
-    model2 = games.load_image("little2.gif")
-    model3 = games.load_image("little3.gif")
-    model4 = games.load_image("little4.gif")
-    model5 = games.load_image("little5.gif")
-    model6 = games.load_image("little6.gif")
-    model7 = games.load_image("little7.gif")
+    model1 = games.load_image(os.path.join(IMG_DIR, "little.gif"))
+    model2 = games.load_image(os.path.join(IMG_DIR, "little2.gif"))
+    model3 = games.load_image(os.path.join(IMG_DIR, "little3.gif"))
+    model4 = games.load_image(os.path.join(IMG_DIR, "little4.gif"))
+    model5 = games.load_image(os.path.join(IMG_DIR, "little5.gif"))
+    model6 = games.load_image(os.path.join(IMG_DIR, "little6.gif"))
+    model7 = games.load_image(os.path.join(IMG_DIR, "little7.gif"))
     image = random.choice([model1, model2, model3, model4, model5, model6, model7])
     ROTATION_STEP = 2
     VELOCITY_STEP = .05
@@ -172,13 +176,13 @@ class Ship(Collider2):
 
 
 class Ship1(Collider3):
-    model1 = games.load_image("little.gif")
-    model2 = games.load_image("little2.gif")
-    model3 = games.load_image("little3.gif")
-    model4 = games.load_image("little4.gif")
-    model5 = games.load_image("little5.gif")
-    model6 = games.load_image("little6.gif")
-    model7 = games.load_image("little7.gif")
+    model1 = games.load_image(os.path.join(IMG_DIR, "little.gif"))
+    model2 = games.load_image(os.path.join(IMG_DIR, "little2.gif"))
+    model3 = games.load_image(os.path.join(IMG_DIR, "little3.gif"))
+    model4 = games.load_image(os.path.join(IMG_DIR, "little4.gif"))
+    model5 = games.load_image(os.path.join(IMG_DIR, "little5.gif"))
+    model6 = games.load_image(os.path.join(IMG_DIR, "little6.gif"))
+    model7 = games.load_image(os.path.join(IMG_DIR, "little7.gif"))
     image = random.choice([model1, model2, model3, model4, model5, model6, model7])
     ROTATION_STEP = 2
     VELOCITY_STEP = .05
@@ -223,16 +227,16 @@ class Ship1(Collider3):
 
 
 class Explosion(games.Animation):
-    sound = games.load_sound("explosion.wav")
-    images = ["explosion1.jpg",
-              "explosion2.jpg",
-              "explosion3.jpg",
-              "explosion4.jpg",
-              "explosion5.jpg",
-              "explosion6.jpg",
-              "explosion7.jpg",
-              "explosion8.jpg",
-              "explosion9.jpg"]
+    sound = games.load_sound(os.path.join(SOUND_DIR, "explosion.wav"))
+    images = [os.path.join(IMG_DIR, "explosion1.jpg"),
+              os.path.join(IMG_DIR, "explosion2.jpg"),
+              os.path.join(IMG_DIR, "explosion3.jpg"),
+              os.path.join(IMG_DIR, "explosion4.jpg"),
+              os.path.join(IMG_DIR, "explosion5.jpg"),
+              os.path.join(IMG_DIR, "explosion6.jpg"),
+              os.path.join(IMG_DIR, "explosion7.jpg"),
+              os.path.join(IMG_DIR, "explosion8.jpg"),
+              os.path.join(IMG_DIR, "explosion9.jpg")]
 
     def __init__(self, x, y):
         super(Explosion, self).__init__(images=Explosion.images,
@@ -282,20 +286,20 @@ HP2 = games.Text(value=1000,
                  x=100,
                  y=30,
                  is_collideable=False)
-control1 = games.load_image("control1.jpg")
+control1 = games.load_image(os.path.join(IMG_DIR, "control1.jpg"))
 cont1 = games.Sprite(image=control1, x=1125, y=535, is_collideable=False)
-control2 = games.load_image("control2.jpg")
+control2 = games.load_image(os.path.join(IMG_DIR, "control2.jpg"))
 cont2 = games.Sprite(image=control2, x=75, y=535, is_collideable=False)
 
 
 def main():
-    wall_image1 = games.load_image("background1.jpg", transparent=False)
-    wall_image2 = games.load_image("background2.jpg", transparent=False)
-    wall_image3 = games.load_image("background3.jpg", transparent=False)
-    wall_image4 = games.load_image("background4.jpg", transparent=False)
-    wall_image5 = games.load_image("background5.jpg", transparent=False)
+    wall_image1 = games.load_image(os.path.join(IMG_DIR, "background1.jpg"), transparent=False)
+    wall_image2 = games.load_image(os.path.join(IMG_DIR, "background2.jpg"), transparent=False)
+    wall_image3 = games.load_image(os.path.join(IMG_DIR, "background3.jpg"), transparent=False)
+    wall_image4 = games.load_image(os.path.join(IMG_DIR, "background4.jpg"), transparent=False)
+    wall_image5 = games.load_image(os.path.join(IMG_DIR, "background5.jpg"), transparent=False)
     games.screen.background = random.choice([wall_image1, wall_image2, wall_image3, wall_image4, wall_image5])
-    games.music.load("maintheme.mp3")
+    games.music.load(os.path.join(SOUND_DIR, "maintheme.mp3"))
 
     for i in range(20):
         x = random.randint(400, 800)
